@@ -1,0 +1,23 @@
+.mouseposition {
+  background-color: white;
+  padding: 3px;
+  text-align: right;
+}
+
+.mousepositioncoord {
+  min-width: 40px;
+  display: inline-block;
+}
+
+div.ol-mouse-position {
+  background-color: white;
+  padding: 6px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
+  color: black;
+  font-family: 'minecraftfont';
+}
+
+.ol-viewport {
+  border-radius: 0.7rem;
+}
