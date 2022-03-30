@@ -38,7 +38,7 @@ export async function getServerSideProps() {
   const status = await mc.status("bedrock", "mc.echobucket.com", 19132)
 
   const properties = await getProperties();
-  const regions = (await getRegions()).map((region) => {
+  const regions = (await getRegions()).map((region: any) => {
     return {
       x: region.x,
       z: region.z,
@@ -55,8 +55,14 @@ export async function getServerSideProps() {
   }
 }
 
+type MinecraftPageProps = {
+  status: any,
+  properties: any,
+  regions: any
+}
 
-const MinecraftPage: NextPage = ({status, properties, regions}) => {
+
+const MinecraftPage: NextPage<MinecraftPageProps> = ({status, properties, regions}) => {
   return (
     <main style={{ height: '100vh' }}>
       <Minecraft status={status} properties={properties} regions={regions}/>
