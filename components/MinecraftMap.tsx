@@ -1,10 +1,11 @@
 import { useRef } from "react"
 import useUnmined from "../hooks/useUnmined"
 import styles from "../styles/Minecraft.module.css"
+import { Properties, Regions } from '../lib/Unmined';
 
 type MinecraftMapProps = {
-  properties: any,
-  regions: any
+  properties: Properties,
+  regions: Regions
 }
 
 export default function MinecraftMap({ 

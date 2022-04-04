@@ -2,6 +2,9 @@ import type { NextPage } from "next"
 import Minecraft from "../../components/Minecraft"
 import axios from "axios"
 import { getJavaStatus, getBedrockStatus } from "../../lib/minecraft"
+import type { MinecraftStatusType } from "../../lib/minecraft"
+import { Properties, Regions, Region } from '../../lib/Unmined';
+
 const BACKEND_URL = process.env.BACKEND_URL
 
 async function getProperties() {
@@ -9,7 +12,7 @@ async function getProperties() {
     `${BACKEND_URL}/minecraft/unmined.map.properties.js`
   )
   try {
-    const properties = new Function(`
+    const properties:Properties = new Function(`
     ${data}
     return UnminedMapProperties;
   `)()
@@ -24,7 +27,7 @@ async function getRegions() {
     `${BACKEND_URL}/minecraft/unmined.map.regions.js`
   )
   try {
-    const regions = new Function(`
+    const regions: Regions = new Function(`
     ${data}
     return UnminedRegions;
   `)()
@@ -38,13 +41,18 @@ export async function getServerSideProps() {
   const bedrock_status = await getBedrockStatus()
   const java_status = await getJavaStatus()
   const properties = await getProperties()
-  const regions = (await getRegions()).map((region: any) => {
-    return {
-      x: region.x,
-      z: region.z,
-      m: Array.from(region.m),
-    }
-  })
+  let regions = await getRegions();
+  if (regions) {
+    regions = regions.map((region: Region) => {
+      return {
+        x: region.x,
+        z: region.z,
+        m: Array.from(region.m),
+      }
+    });
+  } else {
+      regions =[];
+  }
 
   return {
     props: {
@@ -57,10 +65,10 @@ export async function getServerSideProps() {
 }
 
 type MinecraftPageProps = {
-  status: any
-  properties: any
-  regions: any
-  java_status: any
+  status: MinecraftStatusType,
+  properties: Properties,
+  regions: Regions,
+  java_status: MinecraftStatusType
 }
 
 const MinecraftPage: NextPage<MinecraftPageProps> = (props) => {

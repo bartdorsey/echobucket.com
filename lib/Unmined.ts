@@ -8,8 +8,48 @@ import { createStringXY } from 'ol/coordinate';
 import { View, Map, Feature } from 'ol';
 import { Text, Style, Icon, Fill} from 'ol/style';
 import { Point } from 'ol/geom';
+import { fromString } from 'ol/color';
+
+export type Properties = {
+  minRegionX: number,
+  minRegionZ: number,
+  maxRegionX: number,
+  maxRegionZ: number,
+  maxZoom: number,
+  minZoom: number,
+  imageFormat: string,
+  background: string
+  markers: Markers
+}
+
+export type Marker = {
+  x: number,
+  z: number,
+  m: number[],
+  image: string,
+  imageAnchor: number[],
+  imageScale: number,
+  text: string,
+  font: string,
+  offsetY: number,
+  offsetX: number,
+  textColor: string
+}
+
+export type Markers = Marker[];
+
+export type Region = {
+  x: number,
+  z: number,
+  m: number[]
+}
+
+export type Regions = Region[];
+
 class Unmined {
-  map(mapId, options, regions) {
+  openlayersMap: Map | null = null;
+
+  map(mapId: string, options: Properties, regions: Regions) {
     const dpiScale = window.devicePixelRatio ?? 1.0
 
     const worldMinX = options.minRegionX * 512
@@ -154,11 +194,11 @@ class Unmined {
             const url = (
               "/minecraft/tiles/zoom.{z}/{xd}/{yd}/tile.{x}.{y}." + options.imageFormat
             )
-              .replace("{z}", worldZoom)
-              .replace("{yd}", Math.floor(tileY / 10))
-              .replace("{xd}", Math.floor(tileX / 10))
-              .replace("{y}", tileY)
-              .replace("{x}", tileX)
+              .replace("{z}", String(worldZoom))
+              .replace("{yd}", String(Math.floor(tileY / 10)))
+              .replace("{xd}", String(Math.floor(tileX / 10)))
+              .replace("{y}", String(tileY))
+              .replace("{x}", String(tileX))
             return url
           } else return undefined
         },
@@ -205,15 +245,20 @@ class Unmined {
       )
       map.addLayer(markersLayer)
     }
+    
 
     if (options.background) {
-      document.getElementById(mapId).style.backgroundColor = options.background
+      const mapElement = document.getElementById(mapId);
+      if (!mapElement) {
+        throw new Error(`No element found with ID ${mapId}`);
+      }
+      mapElement.style.backgroundColor = options.background
     }
 
     this.openlayersMap = map
   }
 
-  createMarkersLayer(markers, dataProjection, viewProjection) {
+  createMarkersLayer(markers: Markers, dataProjection: Projection, viewProjection: Projection) {
     const features = []
 
     for (let i = 0; i < markers.length; i++) {
@@ -249,7 +294,7 @@ class Unmined {
             offsetX: item.offsetX,
             offsetY: item.offsetY,
             fill: new Fill({
-              color: item.textColor,
+              color: fromString(item.textColor),
             }),
           })
         )

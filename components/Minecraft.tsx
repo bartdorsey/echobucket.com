@@ -5,12 +5,13 @@ import MinecraftMap from './MinecraftMap';
 import { useInterval } from 'ahooks';
 import axios from 'axios';
 import type { MinecraftStatusType } from "../lib/minecraft";
+import type { Properties, Regions } from "../lib/Unmined";
 
 type MinecraftProps = {
   java_status: MinecraftStatusType,
   status: MinecraftStatusType,
-  properties: any,
-  regions: any
+  properties: Properties,
+  regions: Regions
 }
 
 export default function Minecraft({
