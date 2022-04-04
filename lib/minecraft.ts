@@ -62,7 +62,7 @@ export async function getJavaStatus() {
 
 const defaultBedrockStatus: MinecraftStatusType = {
   type: ServerType.BEDROCK,
-  name: 'mc.echobucket.com',
+  name: 'bedrockmc.echobucket.com',
   players: { max: 0, online: 0, list: [] },
   motd: '',
   version: '',

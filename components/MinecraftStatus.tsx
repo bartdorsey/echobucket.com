@@ -2,12 +2,14 @@ import styles from "../styles/Minecraft.module.css"
 import { MinecraftStatusType } from "../lib/minecraft"
 
 type MinecraftStatusProps = {
-  status: MinecraftStatusType
+  status: MinecraftStatusType,
+  onClick: () => void,
+  active: boolean
 }
 
-export default function MinecraftStatus({ status }: MinecraftStatusProps) {
+export default function MinecraftStatus({ status, onClick, active }: MinecraftStatusProps) {
   return (
-    <div className={styles.status}>
+    <div onClick={onClick} className={`${styles.status} ${active ? styles.active : ''}`}>
       <h3>{status.name}</h3>
       <div>Online: {status.online ? "🟢" : "🔴"}</div>
       {status.time ? status.time : null}
