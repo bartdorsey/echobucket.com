@@ -37,8 +37,10 @@ export default function useUnmined(properties, regions) {
   const unminedRef = useRef();
   
   useEffect(() => {
+    if (unminedRef.current) {
+      return;
+    }
     properties.markers = markers;
-    console.log(properties);
     unminedRef.current = new Unmined();
     unminedRef.current.map(
       "map",
