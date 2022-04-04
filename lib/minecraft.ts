@@ -4,12 +4,13 @@ const QUERY_PORT = Number(process.env.QUERY_PORT ?? 25566);
 const BEDROCK_HOST = process.env.BEDROCK_HOST ?? 'localhost';
 const BEDROCK_PORT = Number(process.env.BEDROCK_PORT ?? 19132);
 
-import { queryFull, statusBedrock } from "minecraft-server-util"
+import { queryFull, queryBasic, statusBedrock } from "minecraft-server-util"
 export enum ServerType {
   BEDROCK,
   JAVA
 }
 export type MinecraftStatusType = {
+  name?: string,
   online: boolean,
   type: ServerType,
   version: string
@@ -28,7 +29,9 @@ export type MinecraftStatusType = {
 export async function getJavaStatus() {
   let java_status: MinecraftStatusType
   try {
-    const java_info = await queryFull(JAVA_HOST, QUERY_PORT)
+    const java_info = await queryFull(JAVA_HOST, QUERY_PORT);
+    const basic_info = await queryBasic(JAVA_HOST, QUERY_PORT);
+    console.log(java_info);
 
     java_status = {
       type: ServerType.JAVA,
@@ -37,6 +40,7 @@ export async function getJavaStatus() {
       players: java_info.players,
       hostname: JAVA_HOST,
       port: JAVA_PORT,
+      name: "mcjava.echobucket.com",
       motd: java_info.motd.clean,
     }
   } catch (e) {
@@ -48,6 +52,7 @@ export async function getJavaStatus() {
       players: { max: 0, online: 0 },
       hostname: JAVA_HOST,
       port: JAVA_PORT,
+      name: "mcjava.echobucket.com",
       motd: "Server appears to be down",
     }
     return java_status

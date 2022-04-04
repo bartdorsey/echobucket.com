@@ -1,17 +1,12 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { RCON } from 'minecraft-server-util';
+import { getClient } from '../../../lib/rcon-client';
 import { addHours, format } from 'date-fns';
-const RCON_PORT = Number(process.env['RCON_PORT']) ?? 25576;
 
 async function getTime() {
-  const client = new RCON();
-  await client.connect('localhost', RCON_PORT);
-  await client.login('minecraft');
+  const client = await getClient();
   const message = await client.execute('time query daytime');
   const [_, ticksStr] = message.split('The time is ');
   const ticks = parseInt(ticksStr, 10);
-  await client.close();
   const seconds = ticks * 3.6;
   const ms = seconds * 1000;
   let date = new Date(ms);
