@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { RCON } from 'minecraft-server-util';
 import { addHours, format } from 'date-fns';
-const RCON_PORT = process.env['RCON_PORT'] ?? 25576;
+const RCON_PORT = Number(process.env['RCON_PORT']) ?? 25576;
 
 async function getTime() {
   const client = new RCON();
