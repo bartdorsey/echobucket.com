@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import styles from "../styles/Minecraft.module.css"
 import MinecraftStatus from "./MinecraftStatus"
 import MinecraftMap from './MinecraftMap';
-import { useInterval } from 'ahooks';
+import { useInterval, useRequest } from 'ahooks';
 import axios from 'axios';
 import type { MinecraftStatusType } from "../lib/minecraft";
 import type { Properties, Regions } from "../lib/Unmined";
@@ -14,17 +13,25 @@ type MinecraftProps = {
   regions: Regions
 }
 
+type Response = {
+  time: string
+}
+
 export default function Minecraft({
   java_status,
   status,
   properties,
   regions,
 }: MinecraftProps) {
-  const [javaTime, setJavaTime] = useState('');
+  const { data, run } = useRequest<Response, []>(async () => {
+    const { data } = await axios("/api/minecraft/javatime");
+    return data;
+  }, {
+    manual: true
+  });
 
   useInterval(async () => {
-    const { data } = await axios("/api/minecraft/javatime")
-    setJavaTime(data.time);
+    run();
   }, 2000, {
     immediate: true
   })
@@ -35,7 +42,7 @@ export default function Minecraft({
       <div className={styles.minecraft}>
         <div className={styles.status}>
           <MinecraftStatus status={status} />
-          <MinecraftStatus status={{ ...java_status, time: javaTime }} />
+          <MinecraftStatus status={{ ...java_status, time: data?.time }} />
         </div>
         <MinecraftMap properties={properties} regions={regions}/>
       </div>
