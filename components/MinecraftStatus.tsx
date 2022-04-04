@@ -1,13 +1,18 @@
 import styles from "../styles/Minecraft.module.css"
+import { MinecraftStatusType } from "../lib/minecraft"
 
-export default function MinecraftStatus({ status }) {
+type MinecraftStatusProps = {
+  status: MinecraftStatusType
+}
+
+export default function MinecraftStatus({ status }: MinecraftStatusProps) {
   return (
     <div className={styles.status}>
       <h3>{status.hostname}</h3>
       <div>Online: {status.online ? "🟢" : "🔴"}</div>
       {status.time ? status.time : null}
-      <p>{status.motd.clean}</p>
-      {status.gamemode ? <div>Gamemode: {status.gamemode}</div> : null}
+      <p>{status.motd}</p>
+      {status.gameMode ? <div>Gamemode: {status.gameMode}</div> : null}
 
       <div>Version: {status.version}</div>
       <div>

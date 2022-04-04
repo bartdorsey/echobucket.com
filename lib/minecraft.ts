@@ -1,7 +1,7 @@
-const JAVA_HOST = process.env.JAVA_HOST;
+const JAVA_HOST = process.env.JAVA_HOST ?? 'localhost';
 const JAVA_PORT = 25565;
 const QUERY_PORT = 25566;
-const BEDROCK_HOST = process.env.BEDROCK_HOST;
+const BEDROCK_HOST = process.env.BEDROCK_HOST ?? 'localhost';
 const BEDROCK_PORT = 19132
 
 import { queryFull, statusBedrock } from "minecraft-server-util"
