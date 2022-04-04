@@ -8,7 +8,7 @@ type MinecraftStatusProps = {
 export default function MinecraftStatus({ status }: MinecraftStatusProps) {
   return (
     <div className={styles.status}>
-      <h3>{status.hostname}</h3>
+      <h3>{status.name}</h3>
       <div>Online: {status.online ? "🟢" : "🔴"}</div>
       {status.time ? status.time : null}
       <p>{status.motd}</p>

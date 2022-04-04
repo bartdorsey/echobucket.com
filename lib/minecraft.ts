@@ -4,7 +4,7 @@ const QUERY_PORT = Number(process.env.QUERY_PORT ?? 25566);
 const BEDROCK_HOST = process.env.BEDROCK_HOST ?? 'localhost';
 const BEDROCK_PORT = Number(process.env.BEDROCK_PORT ?? 19132);
 
-import { queryFull, queryBasic, statusBedrock } from "minecraft-server-util"
+import { queryFull, statusBedrock } from "minecraft-server-util"
 export enum ServerType {
   BEDROCK,
   JAVA
@@ -26,38 +26,49 @@ export type MinecraftStatusType = {
   time?: string
 }
 
+const defaultJavaStatus: MinecraftStatusType = {
+  type: ServerType.JAVA,
+  name: 'javamc.echobucket.com',
+  players: { max: 0, online: 0, list: [] },
+  motd: '',
+  version: '',
+  online: false,
+  hostname: JAVA_HOST,
+  port: JAVA_PORT
+}
+
 export async function getJavaStatus() {
-  let java_status: MinecraftStatusType
+  let java_status: MinecraftStatusType;
   try {
     const java_info = await queryFull(JAVA_HOST, QUERY_PORT);
-    const basic_info = await queryBasic(JAVA_HOST, QUERY_PORT);
-    console.log(java_info);
-
     java_status = {
-      type: ServerType.JAVA,
+      ...defaultJavaStatus,
       online: true,
       version: java_info.version,
       players: java_info.players,
-      hostname: JAVA_HOST,
-      port: JAVA_PORT,
-      name: "mcjava.echobucket.com",
       motd: java_info.motd.clean,
     }
   } catch (e) {
     console.error(e)
     java_status = {
-      type: ServerType.JAVA,
+      ...defaultJavaStatus,
       online: false,
-      version: "Unknown",
-      players: { max: 0, online: 0 },
-      hostname: JAVA_HOST,
-      port: JAVA_PORT,
-      name: "mcjava.echobucket.com",
       motd: "Server appears to be down",
     }
     return java_status
   }
   return java_status
+}
+
+const defaultBedrockStatus: MinecraftStatusType = {
+  type: ServerType.BEDROCK,
+  name: 'mc.echobucket.com',
+  players: { max: 0, online: 0, list: [] },
+  motd: '',
+  version: '',
+  online: false,
+  hostname: BEDROCK_HOST,
+  port: BEDROCK_PORT
 }
 
 export async function getBedrockStatus() {
@@ -66,27 +77,18 @@ export async function getBedrockStatus() {
     const bedrock_response = await statusBedrock(BEDROCK_HOST, BEDROCK_PORT)
 
     bedrock_status = {
+      ...defaultBedrockStatus,
       online: true,
-      type: ServerType.BEDROCK,
       version: bedrock_response.version.name,
       players: bedrock_response.players,
       gameMode: bedrock_response.gameMode,
-      hostname: BEDROCK_HOST,
-      port: BEDROCK_PORT,
       motd: bedrock_response.motd.clean,
     }
   } catch (e) {
     console.error(e)
     bedrock_status = {
-      type: ServerType.BEDROCK,
+      ...defaultBedrockStatus,
       online: false,
-      version: "Unknown",
-      players: {
-        online: 0,
-        max: 0,
-      },
-      hostname: BEDROCK_HOST,
-      port: BEDROCK_PORT,
       motd: "Server appears to be down",
     }
   }
