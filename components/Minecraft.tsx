@@ -22,7 +22,7 @@ export default function Minecraft({
 
   return (
     <div className={styles.container}>
-      <h2>Minecraft - mc.echobucket.com</h2>
+      <h2>Minecraft Server Status - echobucket.com</h2>
       <div className={styles.minecraft}>
         <div className={styles.status}>
           <MinecraftStatus status={status} />
