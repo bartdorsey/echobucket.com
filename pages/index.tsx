@@ -15,7 +15,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1 className={styles.title}>echobucket</h1>
         <p className={styles.description}>
-          I'm a developer and video game player. You can follow my socials below
+          I&apos;m a developer and video game player. You can follow my socials below
         </p>
         <ul className={styles.socials}>
           <li>
