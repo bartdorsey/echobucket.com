@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "docker-compose build && docker-compose down && docker-compose up -d"
   },
   "dependencies": {
     "@material-design-icons/svg": "^0.10.8",
