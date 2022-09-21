@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap');
 
 @font-face {
-	font-family: 'minecraftfont';
-	src: url('/fonts/minecraftfont.eot');
-	src: local('minecraftfont'), url('/fonts/minecraftfont.woff') format('woff'), url('/fonts/minecraftfont.ttf') format('truetype');
+  font-family: 'minecraftfont';
+  src: url('/fonts/minecraftfont.eot');
+  src: local('minecraftfont'), url('/fonts/minecraftfont.woff') format('woff'), url('/fonts/minecraftfont.ttf') format('truetype');
 }
 
 * {
@@ -13,21 +13,36 @@
 
 :root {
   /* CSS HEX */
---rich-black-fogra-29: #001219ff;
---blue-sapphire: #005f73ff;
---viridian-green: #0a9396ff;
---middle-blue-green: #94d2bdff;
---medium-champagne: #e9d8a6ff;
---gamboge: #ee9b00ff;
---alloy-orange: #ca6702ff;
---rust: #bb3e03ff;
---rufous: #ae2012ff;
---ruby-red: #9b2226ff;
+  --rich-black-fogra-29: #001219ff;
+  --blue-sapphire: #005f73ff;
+  --viridian-green: #0a9396ff;
+  --middle-blue-green: #94d2bdff;
+  --medium-champagne: #e9d8a6ff;
+  --gamboge: #ee9b00ff;
+  --alloy-orange: #ca6702ff;
+  --rust: #bb3e03ff;
+  --rufous: #ae2012ff;
+  --ruby-red: #9b2226ff;
 }
 
 body {
   margin: 0;
-  background-color: var(--rich-black-fogra-29);
-  color: white;
+  color: var(--rich-black-fogra-29);
+  background-color: white;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    margin: 0;
+    background-color: var(--rich-black-fogra-29);
+    color: white;
+  }
+}
+
+@media (prefers-color-sheme: light) {
+  body {
+    margin: 0;
+    color: var(--rich-black-fogra-29);
+    background-color: white;
+  }
+}
