@@ -52,7 +52,7 @@
 }
 
 .status {
-  background-color: var(--blue-sapphire);
+  background-color: var(--default-background-color);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -68,12 +68,12 @@
   height: 100%;
   width: 100%;
   display: block;
-  border: solid 4px var(--gamboge);
+  border: solid 4px var(--default-foreground);
   border-radius: 1rem;
   image-rendering: pixelated;
 }
 
 .active {
-  border: 1px solid rgb(255,255,255, 0.5);
-  background-color: rgb(255, 255, 255, 0.2);
+  border: 1px solid var(--default-foreground);
+  background-color: var(--default-background);
 }

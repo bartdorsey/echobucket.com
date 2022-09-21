@@ -23,26 +23,27 @@
   --rust: #bb3e03ff;
   --rufous: #ae2012ff;
   --ruby-red: #9b2226ff;
+  --default-background: white;
+  --default-foreground: var(--rich-black-fogra-29);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --default-background: var(--rich-black-fogra-29);
+    --default-foreground: white;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --default-background: white;
+    --default-foreground: var(--rich-black-fogra-29);
+  }
 }
 
 body {
   margin: 0;
-  color: var(--rich-black-fogra-29);
-  background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    margin: 0;
-    background-color: var(--rich-black-fogra-29);
-    color: white;
-  }
-}
-
-@media (prefers-color-sheme: light) {
-  body {
-    margin: 0;
-    color: var(--rich-black-fogra-29);
-    background-color: white;
-  }
+  color: var(--default-foreground);
+  background-color: var(--default-background);
 }

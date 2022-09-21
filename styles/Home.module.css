@@ -25,7 +25,7 @@
 .footer a {
   flex-grow: 1;
   text-decoration: none;
-  color: #ffffff;
+  color: var(--default-foreground);
 }
 
 .title a {
@@ -124,7 +124,7 @@
   list-style-type: none;
 }
 
-.socials > li {
+.socials>li {
   font-size: 2rem;
 }
 
