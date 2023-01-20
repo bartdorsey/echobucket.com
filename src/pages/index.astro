@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro"
+import { SocialIcon } from 'react-social-icons';
+const pageTitle = "echobucket.com"
+
+const socials = [
+  {
+    icon: 'twitch',
+    url: "https://twitch.tv/echobucket",
+  },
+  {
+    icon: 'youtube',
+    url: "https://youtube.com/echobucket",
+  },
+  {
+    icon: 'github',
+    url: "https://github.com/bartdorsey",
+  },
+]
+---
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 var(--size-fluid-2);
+  }
+  .socials {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    gap: var(--size-9);
+    list-style-type: none;
+  }
+
+  .socials > li {
+    font-size: 2rem;
+    
+  }
+</style>
+
+<Layout title={pageTitle}>
+  <div class="container">
+    <p>
+      I&apos;m a developer and video game player. You can follow my socials
+      below
+    </p>
+    <ul class="socials">
+      {
+        socials.map((social) => {
+          return (
+            
+            <li class="social">
+              <SocialIcon
+                network={social.icon}
+                className="social"
+                fgColor="#ffffff"
+                url={social.url}
+              />
+            </li>
+          )
+        })
+      }
+    </ul>
+  </div>
+</Layout>

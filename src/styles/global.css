@@ -1,0 +1,31 @@
+/* the props */
+@import "open-props/style";
+
+/* optional imports that use the props */
+@import "open-props/normalize";
+@import "open-props/buttons";
+
+/* individual imports */
+@import "open-props/easings";
+@import "open-props/animations";
+@import "open-props/sizes";
+@import "open-props/gradients";
+/* see PropPacks for the full list */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap');
+
+@font-face {
+  font-family: 'minecraftfont';
+  src: url('/fonts/minecraftfont.eot');
+  src: local('minecraftfont'), url('/fonts/minecraftfont.woff') format('woff'), url('/fonts/minecraftfont.ttf') format('truetype');
+}
+
+:root {
+  --font-sans: Nunito;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
