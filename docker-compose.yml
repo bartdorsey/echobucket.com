@@ -1,8 +1,16 @@
-version: '3'
 services:
   app:
-    build: ./
+    pull_policy: if_not_present
+    build: 
+      context: .
     restart: unless-stopped
-networks:
-  apps:
-    external: true
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./templates:/etc/nginx/templates
+      - ./certs:/certs
+      - /home/ubuntu/dev/movies:/movies
